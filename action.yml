@@ -19,7 +19,7 @@ runs:
 
         # Export results
         with githubStepSummaryFile.open("a") as summary: 
-            summary.write("## Items In Sample JSON Array/n")
+            summary.write("## Items In Sample JSON Array\n")
             [summary.write(f'{listItem}\n') for listItem in list]
 
         with open(githubOutputFile, "a") as outputFile:
