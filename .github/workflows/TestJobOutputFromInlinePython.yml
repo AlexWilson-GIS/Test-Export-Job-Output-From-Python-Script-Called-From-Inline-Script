@@ -1,0 +1,37 @@
+name: Test Job Output From Inline Python
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/TestJobOutputFromInlinePython.yml
+      - action.yml
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/TestJobOutputFromInlinePython.yml
+      - action.yml
+
+jobs:
+  GenerateOutput:
+    name: Generate Job Output From Composite Action With Inline Python Script
+    runs-on: [ubuntu-latest]
+    outputs:
+      TEST_DATA: ${{steps.testAction.outputs.MYOUTPUT}}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Output Sample JSON
+        id: testAction
+        uses: ./
+  UseOutput:
+    name: Use Output From Previous Job
+    needs: GenerateOutput
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Echo Data
+        run: echo ${{needs.GenerateOutput.outputs.TEST_DATA}}
+        shell: sh
