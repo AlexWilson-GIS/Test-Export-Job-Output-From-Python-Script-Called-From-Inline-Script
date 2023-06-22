@@ -9,7 +9,9 @@ runs:
         repository: AlexWilson-GIS/Test-Export-Job-Output-From-Python-Script-Called-From-Inline-Script
         path: test
     - name: Output Data
-      env:
-        PYTHONPATH: ${{ github.action_path }}test
-      run: import testOutput
-      shell: python
+      run: python ${{ github.action_path }}test/testOutput.py
+      shell: sh
+    #  env:
+    #    PYTHONPATH: ${{ github.action_path }}test
+    #  run: import testOutput
+    #  shell: python
