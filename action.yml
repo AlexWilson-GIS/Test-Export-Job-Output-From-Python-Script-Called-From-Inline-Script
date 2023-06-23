@@ -8,8 +8,11 @@ runs:
       with:
         repository: AlexWilson-GIS/Test-Export-Job-Output-From-Python-Script-Called-From-Inline-Script
         path: test
-    - name: Output Data
+    - name: Output Data From Python Script
       run: python ${{ github.action_path }}test/testOutput.py
+      shell: sh
+    - name: Output Data From Shell Script
+      run: "echo 'SHELL_OUTPUT=[\"shellKey1\": \"shellValue1\", \"shellKey2\": \"shellValue2\"]' >> $GITHUB_OUTPUT"
       shell: sh
     #  env:
     #    PYTHONPATH: ${{ github.action_path }}test

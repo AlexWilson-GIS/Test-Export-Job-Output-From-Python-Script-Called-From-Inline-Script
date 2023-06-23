@@ -19,6 +19,7 @@ jobs:
     runs-on: [ubuntu-latest]
     outputs:
       TEST_DATA: ${{steps.testAction.outputs.MYOUTPUT}}
+      TEST_DATA_FROM_SHELL: ${{steps.testAction.outputs.SHELL_OUTPUT}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -32,4 +33,12 @@ jobs:
     steps:
       - name: Echo Data
         run: echo ${{needs.GenerateOutput.outputs.TEST_DATA}}
+        shell: sh
+  UseShellOutput:
+    name: Use Output Generate From Shell In Previous Job
+    needs: GenerateOutput
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Echo Shell Data
+        run: echo ${{needs.GenerateOutput.outputs.TEST_DATA_FROM_SHELL}}
         shell: sh
