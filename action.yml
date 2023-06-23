@@ -1,5 +1,14 @@
 name: Attempt To Output From Inline Python Script
 description: An action to attempt outputting data from an inline python script in a composite action
+
+outputs:
+  MYOUTPUT:
+    description: My Test Output From Python
+    value: ${{steps.pythonOutput.outputs.MYOUTPUT}}
+  SHELL_OUTPUT:
+    description: My Test Output From a Shell Script
+    value: ${{steps.shellOutput.outputs.SHELL_OUTPUT}}
+
 runs:
   using: composite
   steps:
@@ -9,9 +18,11 @@ runs:
         repository: AlexWilson-GIS/Test-Export-Job-Output-From-Python-Script-Called-From-Inline-Script
         path: test
     - name: Output Data From Python Script
+      id: pythonOutput
       run: python ${{ github.action_path }}test/testOutput.py
       shell: sh
     - name: Output Data From Shell Script
+      id: shellOutput
       run: "echo 'SHELL_OUTPUT=[\"shellKey1\": \"shellValue1\", \"shellKey2\": \"shellValue2\"]' >> $GITHUB_OUTPUT"
       shell: sh
     #  env:
